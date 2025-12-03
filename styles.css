@@ -1,0 +1,31 @@
+:root{
+  --bg:#ffffff;
+  --fg:#111111;
+  --accent:#0077cc;
+  --muted:#666;
+  --focus: #ffbf47;
+}
+[data-theme="high-contrast"]{
+  --bg: #000;
+  --fg: #fff;
+  --accent: #00ff00;
+  --muted: #ccc;
+  --focus: #ffff00;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+body{background:var(--bg);color:var(--fg);padding:1rem;line-height:1.4}
+header h1{margin:0 0 .5rem}
+.controls, .portfolio, .display-options{border:1px solid #ddd;padding:0.75rem;margin-bottom:0.75rem;border-radius:6px}
+.controls label, .portfolio label, .display-options label{display:block;margin-top:.5rem}
+.sim-controls button, .portfolio-actions button{margin-right:.5rem}
+#chart-wrap{border:1px solid #ccc;padding:0.5rem;border-radius:6px;min-height:320px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.02), transparent)}
+button:focus, input:focus, select:focus{outline:3px solid var(--focus);outline-offset:2px}
+.sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+.admin-note{font-size:.95rem;color:#666;margin-bottom:.5rem}
+.admin-only{ /* hidden by default; admin-auth.js will reveal if logged-in */
+  display: none;
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
