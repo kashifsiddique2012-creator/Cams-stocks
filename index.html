@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Accessible Stocks — Live</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1 id="app-title">Accessible Stocks</h1>
+    <p class="sr-only" id="app-desc">Interactive stock market simulator with accessible controls, keyboard navigation, and live updates.</p>
+    <div id="auth-area" aria-live="polite"></div>
+  </header>
+
+  <main id="main" role="main" aria-labelledby="app-title">
+    <section aria-labelledby="dashboard-heading" id="dashboard">
+      <h2 id="dashboard-heading">Dashboard</h2>
+
+      <!-- Admin-only controls: add class "admin-only" so backend-controlled login will hide/show -->
+      <div class="controls admin-only" role="region" aria-labelledby="controls-heading">
+        <h3 id="controls-heading">Market Controls</h3>
+
+        <label for="trend-select">Market Trend</label>
+        <select id="trend-select" aria-describedby="trend-desc">
+          <option value="flat">Flat</option>
+          <option value="bull">Bull (up)</option>
+          <option value="bear">Bear (down)</option>
+          <option value="volatile">Volatile</option>
+        </select>
+        <p id="trend-desc" class="sr-only">Choose market trend preset to bias simulation.</p>
+
+        <label for="volatility-range">Volatility</label>
+        <input id="volatility-range" type="range" min="0" max="100" value="30" />
+        <span id="volatility-value" aria-live="polite">30</span>
+
+        <label for="speed-range">Simulation Speed</label>
+        <input id="speed-range" type="range" min="0" max="3" value="1" step="0.1" />
+        <span id="speed-value" aria-live="polite">1x</span>
+
+        <div class="sim-controls" role="group" aria-label="Simulation actions">
+          <button id="play-btn" aria-pressed="false">Play</button>
+          <button id="pause-btn">Pause</button>
+          <button id="step-btn">Step</button>
+          <button id="reset-btn">Reset</button>
+        </div>
+      </div>
+
+      <!-- Portfolio: make buy/sell admin-only if you want only you to control buys/sells -->
+      <div class="portfolio" role="region" aria-labelledby="portfolio-heading">
+        <h3 id="portfolio-heading">Portfolio</h3>
+        <label for="shares-input">Shares to buy/sell</label>
+        <input id="shares-input" type="number" min="1" value="1" />
+        <div class="portfolio-actions" role="group" aria-label="Portfolio actions">
+          <button id="buy-btn" class="admin-only">Buy</button>
+          <button id="sell-btn" class="admin-only">Sell</button>
+        </div>
+        <div id="portfolio-summary" aria-live="polite" aria-atomic="true">
+          Cash: $100,000.00<br/>  
+          Holdings: 0 shares ($0.00)
+        </div>
+      </div>
+
+      <div class="display-options admin-only" role="region" aria-labelledby="display-heading">
+        <h3 id="display-heading">Display Options</h3>
+        <label>
+          <input id="theme-toggle" type="checkbox" />
+          High-contrast theme
+        </label>
+        <label>
+          <input id="grid-toggle" type="checkbox" checked />
+          Show grid
+        </label>
+        <label>
+          Chart type:
+          <select id="chart-type">
+            <option value="line">Line</option>
+            <option value="area">Area</option>
+            <option value="candles">Candlesticks</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section aria-labelledby="chart-heading" id="chart-section">
+      <h2 id="chart-heading">Interactive Graph</h2>
+      <div id="chart-wrap" role="region" aria-label="Stock price chart" tabindex="0">
+        <!-- SVG chart is injected by JavaScript -->
+      </div>
+      <div id="chart-legend" aria-hidden="false">
+        <p>Use left/right arrows to focus previous/next data point. Drag the handle or use sliders to change values. All changes announced via live region.</p>
+      </div>
+      <div id="live-announcer" role="status" aria-live="polite" class="sr-only"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Prototype — not for trading. Uses simulated data.</small>
+  </footer>
+
+  <script src="/app.js"></script>
+  <script src="/passphrase_gate.js"></script>
+</body>
+</html>
